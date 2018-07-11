@@ -1,4 +1,4 @@
-# Draw text to images
+# Draw text into images
 
 A simple and useless tool just for limited special occasions.
 
