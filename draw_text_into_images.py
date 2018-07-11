@@ -65,20 +65,12 @@ def draw_text_into_images(file_name, out_dir):
     n.save(o_file)
 
 
-def search_file_and_draws(dir_name):
+def search_file_and_draws(dir_name, out_name):
     """Match image files and do draw.
 
     :param dir_name: target directory
     :return: None
     """
-    print(dir_name)
-
-
-if __name__ == '__main__':
-
-    # wait for input
-    dir_name = input(u'Enter target directory path please\n>')
-
     # check if it is a dir
     if os.path.isdir(dir_name):
         # get all files list
@@ -86,11 +78,17 @@ if __name__ == '__main__':
         # filter image files
         reg = re.compile('\.jpg|\.png|\.jpeg|\.gif')
         files = filter(lambda x: bool(reg.search(x)), files)
-        # output dir name
-        o_dir = dir_name + os.sep + 'out'
         # loop images
         for im in files:
-            draw_text_into_images(im, o_dir)
-        print(u'Process completed\nOutput：{}\n'.format(o_dir))
+            draw_text_into_images(im, out_name)
+        print(u'Process completed\nOutput：{}\n'.format(out_name))
     else:
         print(u'The target is not a directory\n')
+
+
+if __name__ == '__main__':
+
+    # wait for input
+    d_name = input(u'Enter target directory path please\n>')
+    o_name = d_name + os.sep + 'out'
+    search_file_and_draws(d_name, o_name)
