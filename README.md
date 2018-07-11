@@ -12,4 +12,4 @@ Things To Do:
 ## Licence notice
 
 The font used by this tool is licenced under the SIL Open Font License 1.1
-- SourceHanSansSC-Normal.otf - [LICENCE](font-licence-notice.txt)
+- SourceHanSansSC-Normal.otf
