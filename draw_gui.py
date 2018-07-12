@@ -8,6 +8,8 @@ from tkinter import ttk
 import os
 import datetime
 
+from draw_text_into_images import get_image_files, draw_text_into_images
+
 
 class App(object):
 
@@ -71,7 +73,6 @@ class App(object):
         mainframe = ttk.Frame(self._app)
         mainframe['padding'] = (10, 10)
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-        # expand when windows resize
         mainframe.columnconfigure(0, weight=1)
         mainframe.rowconfigure(0, weight=1)
 
@@ -122,10 +123,10 @@ class App(object):
 
         :return: None
         """
-        text = Text(self._mainframe, height=25, border=None)
+        text = Text(self._mainframe, height=25)
         text.grid(row=3, columnspan=3)
         scroll = ttk.Scrollbar(self._mainframe, orient=VERTICAL, command=text.yview)
-        scroll.grid(column=1, row=3, sticky=(N, S))
+        scroll.grid(column=4, row=3, sticky=(N, S))
         text.configure(yscrollcommand=scroll.set)
         text.insert('1.0', 'Select input and output directories, and click Perform button to start.\n')
         text['stat'] = 'disable'
@@ -152,9 +153,36 @@ class App(object):
 
         :return: None
         """
+        # exit if input is invalid
         if not self.check_form():
             return
+
+        dir_name = self.dir_name.get()
+        out_name = self.out_name.get()
+
+        # check if it is a directory
+        if not os.path.isdir(dir_name):
+            self.insert_log('Target is not a directory: %s' % dir_name)
+            self.insert_log('Check input and try again please.')
+            return
+
+        # get files list
+        files = os.listdir(dir_name)
+        # get images
+        images = get_image_files(files)
+
+        # check if no target inside the folder
+        if len(images) == 0:
+            self.insert_log('No image files inside this directory, try again please.')
+            return
+
+        # everything is ok, start processing
         self.insert_log('Mission started.')
+
+        for im in images:
+            self.insert_log('Start drawing: %s' % str(im))
+            draw_text_into_images(dir_name, im, out_name)
+            self.insert_log('Drawing completed.')
 
     def insert_log(self, msg):
         """Insert logs into message box
@@ -177,8 +205,10 @@ class App(object):
         """
         p = filedialog.askdirectory()
         getattr(self, target).set(p)
-        if p and target == 'dir_name' and not self.out_name.get():
-            self.out_name.set(p + os.sep + 'out')
+        if bool(p):
+            if target == 'dir_name':
+                if not self.out_name.get():
+                    self.out_name.set(p + os.sep + 'out')
 
     @staticmethod
     def get_time():
@@ -186,7 +216,7 @@ class App(object):
 
         :return: formatted datetime
         """
-        return str(datetime.datetime.now())
+        return datetime.datetime.now().strftime('%d/%m/%y %H:%M:%S.%f')
 
     def add_time_prefix(self, msg):
         """Add timestamp prefix to specified message
