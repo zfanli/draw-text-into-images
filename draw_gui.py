@@ -58,7 +58,7 @@ class App(object):
         """
         app = Tk()
         app.title('Draw text into images')
-        app.geometry('550x500')
+        # app.geometry('550x500')
         app.resizable(False, False)
         app.rowconfigure(0, weight=1)
         app.columnconfigure(0, weight=1)
@@ -95,14 +95,14 @@ class App(object):
         """
         dir_input_frame = ttk.Frame(self._mainframe)
         dir_input_frame.grid(column=0, row=0, sticky=N)
-        ttk.Entry(dir_input_frame, textvariable=self.dir_name, width=30).grid(column=1, row=0)
+        ttk.Entry(dir_input_frame, textvariable=self.dir_name, width=40).grid(column=1, row=0)
         ttk.Label(dir_input_frame, text='Input:', width=7).grid(column=0, row=0, sticky=E)
         ttk.Button(dir_input_frame, text='Browse',
                    command=lambda: self.ask_directory('dir_name')).grid(column=2, row=0)
 
         out_input_frame = ttk.Frame(self._mainframe, height=2)
         out_input_frame.grid(column=0, row=1, sticky=N)
-        ttk.Entry(out_input_frame, textvariable=self.out_name, width=30).grid(column=1, row=0)
+        ttk.Entry(out_input_frame, textvariable=self.out_name, width=40).grid(column=1, row=0)
         ttk.Label(out_input_frame, text='Output:', width=7).grid(column=0, row=0, sticky=E)
         ttk.Button(out_input_frame, text='Browse',
                    command=lambda: self.ask_directory('out_name')).grid(column=2, row=0)

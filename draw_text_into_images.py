@@ -51,7 +51,7 @@ def draw_text_into_images(dir_name, file_name, out_dir):
         font_size = round(size[0] / len(text))
         coo_x = 0
     # set font and size
-    font = ImageFont.truetype('./SourceHanSansSC-Normal.otf', font_size)
+    font = ImageFont.truetype('./sarasa-mono-sc-regular.ttf', font_size)
     coo = (coo_x, size[1])
 
     # draw text
