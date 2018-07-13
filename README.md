@@ -2,7 +2,9 @@
 
 A simple and useless tool just for limited special occasions.
 
-Just add file name into the images.
+Just add file name into the images. Like this.
+
+![Example](example.png)
 
 ## Licence notice
 
