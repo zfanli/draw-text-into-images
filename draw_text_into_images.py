@@ -32,9 +32,9 @@ def draw_text_into_images(dir_name, file_name, out_dir):
     n = img.crop(box)
 
     # color black
-    black = (0, 0, 0)
+    black = '#000'
     # color white
-    white = (255, 255, 255)
+    white = '#fff'
 
     # create draw object
     draw = ImageDraw.Draw(n)
@@ -42,7 +42,7 @@ def draw_text_into_images(dir_name, file_name, out_dir):
     draw.rectangle([(0, size[1]), (size[0], size[1] + extend)], white)
 
     # get text from file name
-    text = str(file_name).split('.')[0]
+    text = os.path.splitext(file_name)[0]
     # calculate text start position
     # x = (width - length of text) / 2
     coo_x = (size[0] - len(text) * font_size) / 2
@@ -51,8 +51,8 @@ def draw_text_into_images(dir_name, file_name, out_dir):
         font_size = round(size[0] / len(text))
         coo_x = 0
     # set font and size
-    font = ImageFont.truetype('./sarasa-mono-sc-regular.ttf', font_size)
-    coo = (coo_x, size[1])
+    font = ImageFont.truetype('./SourceHanSansSC-Normal.otf', font_size)
+    coo = (coo_x, size[1] + (extend - font_size) / 2)
 
     # draw text
     draw.text(coo, text, black, font)
